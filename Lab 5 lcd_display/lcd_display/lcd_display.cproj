@@ -181,6 +181,12 @@
     <Compile Include="bios_leds.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="lab_lcd.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lab_lcd.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
