@@ -10,12 +10,14 @@
 //------------------------------------------------------------------------------------
 // Global constant(s)
 //------------------------------------------------------------------------------------
-#define INT_FREQUENCY     38000L
+//#define INT_FREQUENCY   38000L
+#define INT_FREQUENCY      2500L
 #define MAIN_LOOP_FREQUENCY 100
 
 #define SEQ_CNT     2   // how many sequences
 #define SEQ_LEN    10   // maximum length of a sequence (otherwise, 0-terminated)
-#define SEQ_STEP 3800   // how many interrupts for one sequence
+//#define SEQ_STEP 3800
+#define SEQ_STEP 250   // how many interrupts for one sequence
 #define SEQ_NONE SEQ_CNT
 
 
@@ -36,7 +38,7 @@ inline void T1intOFF() { TIMSK1 = 0; }
 //------------------------------------------------------------------------------------
 static volatile uint8_t data_next = SEQ_NONE;
 
-void start(uint8_t to_send) {
+void send( uint8_t to_send ) {
     if ( SEQ_NONE == data_next ) {
         data_next = to_send;
         T1intON();
@@ -114,8 +116,8 @@ int main(void)
         uint8_t but_chg = ( but_cur^but_prev ) & but_cur;
         but_prev = but_cur; // important! update what is now current will be past next time
 
-        if ( (but_chg & B_K4) !=0 ) start(0);
-        if ( (but_chg & B_K5) !=0 ) start(1);
+        if ( (but_chg & B_K4) !=0 ) send(0);
+        if ( (but_chg & B_K5) !=0 ) send(1);
     }
 
     return(0);
