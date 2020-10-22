@@ -169,18 +169,6 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="bios_keys.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="bios_keys.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="bios_leds.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="bios_leds.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="lab_lcd.c">
       <SubType>compile</SubType>
     </Compile>
