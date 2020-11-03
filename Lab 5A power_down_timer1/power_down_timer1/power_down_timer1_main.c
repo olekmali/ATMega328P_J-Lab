@@ -14,7 +14,7 @@
 // Global constant(s)
 //------------------------------------------------------------------------------------
 #define INT_FREQUENCY         1L
-#define MAIN_LOOP_WAKEUP     10 // do somehting only once every 10 interrupts
+#define MAIN_LOOP_WAKEUP     10 // do something only once every 10 interrupts
 
 //------------------------------------------------------------------------------------
 // Global variable(s) used as bridge to pass parameters to the interrupts
@@ -57,7 +57,7 @@ void MyTimerFN (void)
 void do_something() {
     leds_set( leds_get() | B_L4 );
     _delay_ms(500);
-    // wdt_reset(); use WDT restet intermitently
+    // wdt_reset(); use WDT reset intermittently
     // if the whole task takes more than 1.7 seconds
     leds_set( leds_get() & ~B_L4 );
 }
