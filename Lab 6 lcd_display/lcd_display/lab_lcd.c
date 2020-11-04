@@ -99,11 +99,33 @@ void lcd_putcmd(uint8_t cmnd) {
     lcd_put_nibble(LCD_XXXXR, ________________ );
 }
 
+// clears the display
 void lcd_clear(void) {
     lcd_wait();
     // send clear display command - two nibbles or one command
     lcd_putcmd(0b________);
 }
+
+// returns to 0 position
+void lcd_home (void) {
+    lcd_wait();
+    // send reset position display command - two nibbles or one command
+    lcd_putcmd(0b________);
+}
+
+// show cursor: 0=off , 1=on
+void lcd_cursor(uint8_t on) {
+    lcd_wait();
+    if (on) }
+        // send command
+        lcd_putcmd(0b________);
+    } else {
+        // send command
+        lcd_putcmd(0b________);
+    }
+}
+
+
 
 /* Lab 5-2 essential function for lcd_wait() */
 uint8_t lcd_get_nibble() {

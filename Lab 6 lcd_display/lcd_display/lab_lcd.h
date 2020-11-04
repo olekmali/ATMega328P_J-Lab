@@ -13,7 +13,9 @@ void    lcd_putchr(char   chr);
 void    lcd_putstr(char * str);
 
 void    lcd_putcmd(uint8_t cmnd);
-void    lcd_clear (void);
+void    lcd_clear (void);           // clears display and returns to 0 position
+void    lcd_home  (void);           // returns to 0 position
+void    lcd_cursor(uint8_t on);     // show cursor: 0=off , 1=on
 
 //uint8_t lcd_get_nibble() - library internal
 void    lcd_wait (void);
