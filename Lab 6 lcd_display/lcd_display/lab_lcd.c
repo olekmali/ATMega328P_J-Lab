@@ -10,12 +10,12 @@ typedef enum { LCD_CMNDR = 0, LCD_DATAR = 1} lcd_destination_t;
 /*
     Connections:
     LCD D7 D6 D5 D4 --  PortC 3 2 1 0 (most of the time output)
-    LCD E RW RS     --  PortD 2 1 0   (always output)
+    LCD E RW RS     --  PortB 2 1 0   (always output)
 */
 
 /* Lab 5-1 essential function for lcd_init(..) and in Lab 5-2 for lcd_put*(..) */
 void lcd_put_nibble(lcd_destination_t mode, uint8_t data) {
-    // prerequisite: set PortD 210 as OUT
+    // prerequisite: set PortB 210 as OUT
 
     // prerequisite: E  <- 0
 
@@ -116,7 +116,7 @@ void lcd_home (void) {
 // show cursor: 0=off , 1=on
 void lcd_cursor(uint8_t on) {
     lcd_wait();
-    if (on) }
+    if (on) {
         // send command
         lcd_putcmd(0b________);
     } else {
@@ -147,9 +147,13 @@ uint8_t lcd_get_nibble() {
 }
 
 void lcd_wait(void) {
-    // start with an empty wait and implement lcd_put*(..) first
-    // but at some point implement checking status
-    // if the last command is already complete
+    // start with a 2ms wait which is max something can take time to do
+    //      e.g. clear() and home() take more than 1ms to complete
+    // implement lcd_put*(..) first
+    // but at some point implement checking the status and waiting as needed
+    //      for the previous command to complete before sending the next one
+    // after testing the proper lcd_wait() implement a 5 ms timeout in it
+    _delay_ms(2); // <-- replace that with actual wait loop
 }
 
 uint8_t lcd_getreg(uint8_t addr) {
