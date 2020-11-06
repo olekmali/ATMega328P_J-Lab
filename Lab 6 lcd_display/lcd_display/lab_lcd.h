@@ -13,18 +13,13 @@ void    lcd_putchr(char   chr);
 void    lcd_putstr(char * str);
 
 void    lcd_putcmd(uint8_t cmnd);
-void    lcd_clear (void);           // clears display and returns to 0 position
-void    lcd_home  (void);           // returns to 0 position
-void    lcd_cursor(uint8_t on);     // show cursor: 0=off , 1=on
+void    lcd_clear (void);       // clears display and returns to 0 position
+void    lcd_home  (void);       // returns to 0 position
+void    lcd_cursor(uint8_t on); // show cursor: 0=off , 1=on
+void    lcd_gotoXY(uint8_t r, uint8_t c);
 
 //uint8_t lcd_get_nibble() - library internal
 void    lcd_wait (void);
 
-/* Lab 5-3 */
-uint8_t lcd_getreg(uint8_t addr);
-void    lcd_putreg(uint8_t addr, uint8_t data);
-
-void    lcd_backspace(void);
-void    lcd_newline(void);
 
 #endif /* LAB_LCD_H_ */

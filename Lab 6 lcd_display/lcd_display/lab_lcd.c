@@ -15,8 +15,6 @@ typedef enum { LCD_CMNDR = 0, LCD_DATAR = 1} lcd_destination_t;
 
 /* Lab 5-1 essential function for lcd_init(..) and in Lab 5-2 for lcd_put*(..) */
 void lcd_put_nibble(lcd_destination_t mode, uint8_t data) {
-    // prerequisite: set PortB 210 as OUT
-
     // prerequisite: E  <- 0
 
     // RS <- mode (0 command 1 data)
@@ -28,11 +26,9 @@ void lcd_put_nibble(lcd_destination_t mode, uint8_t data) {
 
     // RW <- 0
 
-    // wait tSP1 >= 30ns (1us is OK)
-
     // set PortC 3210 as OUT (in case it was not yet)
 
-    // D7654 <- PortC3210 <- data
+    // wait tSP1 >= 30ns (1us is OK)
 
     // E  <- 1
 
@@ -40,11 +36,18 @@ void lcd_put_nibble(lcd_destination_t mode, uint8_t data) {
 
     // E  <- 0
 
-    // wait tHD2 >=10ns ( 1us is OK)
+    // wait max(tHD1 >=10ns, tHD2 >=10ns) ( 1us is OK)
 }
 
 /* Lab 5-1 */
 void lcd_init() {
+    // Set up PortB 210 as OUT and set to 0
+    DDRB  = DDRB  | 0b________;
+    PORTB = PORTB & 0b________;
+
+    // Set up PortC 3210 as OUT
+    DDRC  = DDRC | 0b________;
+
     _delay_ms(20);  // >= 18ms
     //--
     lcd_put_nibble(LCD_XXXXR, 0b____); // in 8bit mode 0011----
@@ -125,16 +128,23 @@ void lcd_cursor(uint8_t on) {
     }
 }
 
+void  lcd_gotoXY(uint8_t r, uint8_t c) {
+
+}
+
 
 
 /* Lab 5-2 essential function for lcd_wait() */
-uint8_t lcd_get_nibble() {
+uint8_t lcd_get_nibble(lcd_destination_t mode) {
     uint8_t data = 0;
-    // prerequisite: set PortD 210 as OUT
-    // prerequisite: E  <- 0
-    // set PortC 3210 as IN (is already in?)
+    // ensure the prerequisite: E  <- 0
+    // set PortC 3210 as IN
     // set PortC no pull up resistors
-    // RS <- 1
+    if ( mode == LCD_CMNDR ) {
+        // RS <- mode (0 command 1 data)
+    } else {
+        // RS <- mode (0 command 1 data)
+    }
     // RW <- 1
     // wait tSP1 >= 30ns (1us is OK)
     // E  <- 1
@@ -143,6 +153,9 @@ uint8_t lcd_get_nibble() {
     // read data <- D7654
     // E  <- 0
     // wait tHD2 >=10ns ( 1us is OK)
+    // RW <- 0
+    // wait tHD1 >=10ns ( 1us is OK)
+    // set PortC 3210 back as OUT
     return( data );
 }
 
@@ -154,20 +167,4 @@ void lcd_wait(void) {
     //      for the previous command to complete before sending the next one
     // after testing the proper lcd_wait() implement a 5 ms timeout in it
     _delay_ms(2); // <-- replace that with actual wait loop
-}
-
-uint8_t lcd_getreg(uint8_t addr) {
-    return(0); // replace this with requested code
-}
-
-void lcd_putreg(uint8_t addr, uint8_t data) {
-
-}
-
-void lcd_backspace(void) {
-
-}
-
-void lcd_newline(void) {
-
 }
