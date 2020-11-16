@@ -160,11 +160,12 @@ uint8_t lcd_get_nibble(lcd_destination_t mode) {
 }
 
 void lcd_wait(void) {
-    // start with a 2ms wait which is max something can take time to do
+    // start with a few ms wait which is max something can take time to do
     //      e.g. clear() and home() take more than 1ms to complete
     // implement lcd_put*(..) first
     // but at some point implement checking the status and waiting as needed
     //      for the previous command to complete before sending the next one
     // after testing the proper lcd_wait() implement a 5 ms timeout in it
-    _delay_ms(2); // <-- replace that with actual wait loop
+
+    _delay_ms(1); // <-- replace that with actual wait loop and then with timeout
 }

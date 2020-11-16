@@ -13,17 +13,47 @@ inline void L5init()   { DDRB = DDRB | L5;    }
 inline void L5off()    { PORTB = PORTB & ~L5; }
 inline void L5on()     { PORTB = PORTB | L5;  }
 inline void L5toggle() { PORTB = PORTB ^ L5;  }
+inline void halt()     { while(1) ; }
 /* end testing stub */
 
 
 // this test allows you to do the final tweak of the delay function
 int main()
 {
-    lcd_init();
-    lcd_putchr('A');
-    lcd_putstr(" Testing... ");
-
     L5init();
+    lcd_init();
+//  halt();
+
+    lcd_putchr('A');
+//  halt();
+
+    lcd_putstr(" Testing... ");
+    _delay_ms(2000);
+//  halt();
+
+    lcd_gotoXY(1, 0);
+    lcd_putstr("Second Line ");
+    _delay_ms(2000);
+//  halt();
+
+    lcd_home();
+    lcd_putstr("Home ");
+    _delay_ms(2000);
+//  halt();
+
+    lcd_clear();
+    lcd_putstr("Clear Screen ");
+    _delay_ms(2000);
+//  halt();
+
+    lcd_clear();
+    lcd_cursor(0);
+    lcd_putstr("No cursor ");
+    _delay_ms(2000);
+//  halt();
+
+    lcd_clear();
+    lcd_putstr("Loop: ");
 
     char c = ' ';
     while(1)
