@@ -28,6 +28,8 @@ void lcd_put_nibble(lcd_destination_t mode, uint8_t data) {
 
     // set PortC 3210 as OUT (in case it was not yet)
 
+    // D7654 <- PortC3210 <- data (leave the upper bits alone!)
+
     // wait tSP1 >= 30ns (1us is OK)
 
     // E  <- 1
@@ -88,7 +90,7 @@ void lcd_putchr(char chr) {
     lcd_put_nibble(LCD_XXXXR, ________________ );
 }
 
-void lcd_putstr(char * str) {
+void lcd_putstr(const char * str) {
     while ( *str != '\0') {
         lcd_putchr(*str);
         ++str;

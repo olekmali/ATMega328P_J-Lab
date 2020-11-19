@@ -10,7 +10,7 @@ void    lcd_init();
 
 /* Lab 5-2 */
 void    lcd_putchr(char   chr);
-void    lcd_putstr(char * str);
+void    lcd_putstr(const char * str);
 
 void    lcd_putcmd(uint8_t cmnd);
 void    lcd_clear (void);       // clears display and returns to 0 position
