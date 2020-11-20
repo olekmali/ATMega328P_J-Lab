@@ -131,6 +131,7 @@ void lcd_cursor(uint8_t on) {
 }
 
 void  lcd_gotoXY(uint8_t r, uint8_t c) {
+    // Reference: http://www.firmcodes.com/microcontrollers/8051-3/interfacing-lcd-with-8051/lcd-commands-and-understanding-of-lcd/
 
 }
 
