@@ -152,7 +152,7 @@ uint8_t lcd_get_nibble(lcd_destination_t mode) {
     // E  <- 1
     // wait tD >=1us
     // wait 3 more clock cycles (total wait of 2us is OK)
-    // read data <- D7654
+    // read data <- PinC3210 <- D7654
     // E  <- 0
     // wait tHD2 >=10ns ( 1us is OK)
     // RW <- 0
