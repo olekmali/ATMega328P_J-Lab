@@ -132,7 +132,7 @@
     <Compile Include="bios_uart0.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="twi_6050_simple.c">
+    <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="lib_mpu6050.c">

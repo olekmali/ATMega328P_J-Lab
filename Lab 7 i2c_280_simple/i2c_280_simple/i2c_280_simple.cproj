@@ -138,7 +138,7 @@
     <Compile Include="lib_bmp280.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="twi_280_simple.c">
+    <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
