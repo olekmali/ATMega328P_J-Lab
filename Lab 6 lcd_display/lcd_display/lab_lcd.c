@@ -166,9 +166,11 @@ void lcd_wait(void) {
     // start with a few ms wait which is max something can take time to do
     //      e.g. clear() and home() take more than 1ms to complete
     // implement lcd_put*(..) first
+    // implement lcd_getcmd() next
     // but at some point implement checking the status and waiting as needed
     //      for the previous command to complete before sending the next one
-    // after testing the proper lcd_wait() implement a 5 ms timeout in it
+    // after testing and documenting the lab with video
+    // the proper lcd_wait() shall implement a 5 ms timeout in it
 
-    _delay_ms(1); // <-- replace that with actual wait loop and then with timeout
+    _delay_ms(3); // <-- replace that with actual wait loop and then with timeout
 }

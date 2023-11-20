@@ -32,7 +32,7 @@ int main()
 //  halt();
 
     lcd_gotoXY(1, 0);
-    lcd_putstr("Second Line ");
+    lcd_putstr("Second Line "); // Replace this with your name to get credit
     _delay_ms(2000);
 //  halt();
 
@@ -51,6 +51,12 @@ int main()
     lcd_putstr("No cursor ");
     _delay_ms(2000);
 //  halt();
+
+    lcd_clear();
+    lcd_cursor(1);
+    lcd_putstr("Cursor On ");
+    _delay_ms(2000);
+    //  halt();
 
     lcd_clear();
     lcd_putstr("Loop: ");

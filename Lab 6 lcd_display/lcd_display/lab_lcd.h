@@ -18,7 +18,9 @@ void    lcd_home  (void);       // returns to 0 position
 void    lcd_cursor(uint8_t on); // show cursor: 0=off , 1=on
 void    lcd_gotoXY(uint8_t r, uint8_t c);
 
-//uint8_t lcd_get_nibble() - library internal
+//uint8_t lcd_get_nibble(...) - library internal
+char    lcd_getchr();
+uint8_t lcd_getcmd();           // returns the LCD status byte
 void    lcd_wait (void);
 
 
