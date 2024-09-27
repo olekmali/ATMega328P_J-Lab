@@ -17,15 +17,15 @@ inline void delay_digital_io_change(void)
 }
 
 // Row and Column line manipulation
-inline void setDDRD(uint8_t v)  { DDRD  = (DDRD  & 0x0F) | ( (v<<4) & 0xF0); }
-inline void setPORTD(uint8_t v) { PORTD = (PORTD & 0x0F) | ( (v<<4) & 0xF0); }
-inline void setDDRC(uint8_t v)  { DDRC  = (DDRC  & 0xF0) | ( v & 0x0F); }
-inline void setPORTC(uint8_t v) { PORTC = (PORTC & 0xF0) | ( v & 0x0F); }
+inline void setDDRcolumns(uint8_t v)    { DDRD  = (DDRD  & 0x0F) | ( (v<<4) & 0xF0); }
+inline void setPORTcolumns(uint8_t v)   { PORTD = (PORTD & 0x0F) | ( (v<<4) & 0xF0); }
+inline void setDDRrows(uint8_t v)   { DDRD  = (DDRD  & 0xF0) | ( v & 0x0F); }
+inline void setPORTrows(uint8_t v)  { PORTD = (PORTD & 0xF0) | ( v & 0x0F); }
 // Row and Column low-level actions
-inline void rechargeAllLines()  { setDDRD(0b1111); setPORTD(0b1111); setDDRC(0b1111); setPORTC(0b1111); }
-inline void disconnectAllLines(){ setDDRD(0b0000); setPORTD(0b0000); setDDRC(0b0000); setPORTC(0b0000); }
-inline void SetReadRow()        { setDDRD(0b0000); setPORTD(0b1111); }
-inline uint8_t getPINDshifted() { return( (PIND>>4) & 0x0F ); }
+inline void rechargeAllLines()      { setDDRcolumns(0b1111); setPORTcolumns(0b1111); setDDRrows(0b1111); setPORTrows(0b1111); }
+inline void disconnectAllLines()    { setDDRcolumns(0b0000); setPORTcolumns(0b0000); setDDRrows(0b0000); setPORTrows(0b0000); }
+inline void SetReadRow()            { setDDRcolumns(______); setPORTcolumns(______); }
+inline uint8_t getColumnsShifted()  { return( (PIND>>4) & 0x0F ); }
 
 char keypressed(void)
 {
@@ -33,8 +33,6 @@ char keypressed(void)
     // this may be needed because we share some lines with other peripherals
     uint8_t s_ddrd = DDRD;
     uint8_t s_pord = PORTD;
-    uint8_t s_ddrc = DDRC;
-    uint8_t s_porc = PORTC;
 
     // The scanning sequence is as follows:
     // ROW DDR  ROW PORT    COL DDR  COL PORT
@@ -53,7 +51,7 @@ char keypressed(void)
     // wait, read, recharge
     // read row
     // 0000     0000        0000    0000 -- disconnect for PIN safety
-    // or 0000     1111        1111    0000 -- for PIN change interrupt driven keypad
+ // or 0000     1111        1111    0000 -- for PIN change interrupt driven keypad
 
 
     uint8_t scanned;
@@ -62,18 +60,18 @@ char keypressed(void)
     // scan the third / bottom row, get all columns
     rechargeAllLines();
     delay_digital_io_change();
-    SetReadRow(); setDDRC(0b1000); setPORTC(0b0111);
+    SetReadRow(); setDDRrows(______); setPORTrows(______);
     delay_digital_io_change();
-    scanned = 0x0F & ~ getPINDshifted();
+    scanned = 0x0F & ~ getColumnsShifted();
     if (scanned && (status!=KEY_NONE) ) {
         status = KEY_MANY;
     } else {
         switch (scanned) {
             case 0b00000000: break;
-            case 0b00000001: status = KEY_D;  break;
-            case 0b00000010: status = KEY_H;  break;
-            case 0b00000100: status = KEY_0;  break;
-            case 0b00001000: status = KEY_S;  break;
+            case 0b00000001: status = ______;  break;
+            case 0b00000010: status = ______;  break;
+            case 0b00000100: status = ______;  break;
+            case 0b00001000: status = ______;  break;
             default:         status = KEY_MANY;
         }
     }
@@ -81,18 +79,18 @@ char keypressed(void)
     // scan the second row
     rechargeAllLines();
     delay_digital_io_change();
-    SetReadRow(); setDDRC(0b0100); setPORTC(0b1011);
+    SetReadRow(); setDDRrows(______); setPORTrows(______);
     delay_digital_io_change();
-    scanned = 0x0F & ~ getPINDshifted();
+    scanned = 0x0F & ~ getColumnsShifted();
     if (scanned && (status!=KEY_NONE) ) {
         status = KEY_MANY;
     } else {
         switch (scanned) {
             case 0b00000000: break;
-            case 0b00000001: status = KEY_C;  break;
-            case 0b00000010: status = KEY_9;  break;
-            case 0b00000100: status = KEY_8;  break;
-            case 0b00001000: status = KEY_7;  break;
+            case 0b00000001: status = ______;  break;
+            case 0b00000010: status = ______;  break;
+            case 0b00000100: status = ______;  break;
+            case 0b00001000: status = ______;  break;
             default:         status = KEY_MANY;
         }
     }
@@ -100,18 +98,18 @@ char keypressed(void)
     // scan the first row
     rechargeAllLines();
     delay_digital_io_change();
-    SetReadRow(); setDDRC(0b0010); setPORTC(0b1101);
+    SetReadRow(); setDDRrows(______); setPORTrows(______);
     delay_digital_io_change();
-    scanned = 0x0F & ~ getPINDshifted();
+    scanned = 0x0F & ~ getColumnsShifted();
     if (scanned && (status!=KEY_NONE) ) {
         status = KEY_MANY;
     } else {
         switch (scanned) {
             case 0b00000000: break;
-            case 0b00000001: status = KEY_B;  break;
-            case 0b00000010: status = KEY_6;  break;
-            case 0b00000100: status = KEY_5;  break;
-            case 0b00001000: status = KEY_4;  break;
+            case 0b00000001: status = ______;  break;
+            case 0b00000010: status = ______;  break;
+            case 0b00000100: status = ______;  break;
+            case 0b00001000: status = ______;  break;
             default:         status = KEY_MANY;
         }
     }
@@ -119,18 +117,18 @@ char keypressed(void)
     // scan the zeroth / top row
     rechargeAllLines();
     delay_digital_io_change();
-    SetReadRow(); setDDRC(0b0001); setPORTC(0b1110);
+    SetReadRow(); setDDRrows(______); setPORTrows(______);
     delay_digital_io_change();
-    scanned = 0x0F & ~ getPINDshifted();
+    scanned = 0x0F & ~ getColumnsShifted();
     if (scanned && (status!=KEY_NONE) ) {
         status = KEY_MANY;
     } else {
         switch (scanned) {
             case 0b00000000: break;
-            case 0b00000001: status = KEY_A;  break;
-            case 0b00000010: status = KEY_3;  break;
-            case 0b00000100: status = KEY_2;  break;
-            case 0b00001000: status = KEY_1;  break;
+            case 0b00000001: status = ______;  break;
+            case 0b00000010: status = ______;  break;
+            case 0b00000100: status = ______;  break;
+            case 0b00001000: status = ______;  break;
             default:         status = KEY_MANY;
         }
     }
@@ -141,8 +139,6 @@ char keypressed(void)
     // note: these four lines may have to be set up differently for pin changed or edge interrupt mode in Junior Lab
     DDRD  = s_ddrd;
     PORTD = s_pord;
-    DDRC  = s_ddrc;
-    PORTC = s_porc;
 
     return(status);
 }
