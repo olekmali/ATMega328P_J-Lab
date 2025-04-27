@@ -5,9 +5,8 @@
 
 /*  NOTE! NEW WIRING:
     Connect the LEDs to lower bits PortB (5 LEDs to bits 0 through 4)
-    Connect the Buttons to PortD (4 keys to upper 4 bits 4 through 7)
     Connect the Keypad rows to upper four bits of PortD (same as buttons)
-    Connect the Keypad columns to the lowest 4 bits of PortC
+    Connect the Keypad columns to the lower four bits of PortD
 */
 
 // include the line below before #include "bioskpad.h" to use ASCII code
