@@ -10,20 +10,22 @@
 //------------------------------------------------------------------------------------
 // Global constant(s)
 //------------------------------------------------------------------------------------
-#define PWM_FREQUENCY      1000L
-#define PWM_RESOLUTION        5
+#define PWM_FREQUENCY        50UL
+#define PWM_RESOLUTION      200U
                         //  ^^^ PWM resolution which is ( 100% / PWM_RESOLUTION% )
-                        //  ^^^ In this case it is 20%, the levels are 0% 20% 40% 60% 80% 100%
+                        //  ^^^ Value of 200 means that the internal PWM counter counts 0..199
+						//  ^^^ WHich happens to work with servomotors when FRQ is set yo 50.
 #define INT_FREQUENCY       (PWM_FREQUENCY * PWM_RESOLUTION)
-#define MAIN_LOOP_FREQUENCY 100
+#define MAIN_LOOP_FREQUENCY 100U
 
 typedef uint8_t pwmcnt_t;
     //  ^^^^^^ make sure that ( INT_FREQUENCY / MAIN_LOOP_FREQUENCY ) fits the variable range!
     //  ^^^^^^ make sure that ( PWM_RESOLUTION ) fits the variable range!
     // uint8_t - 255, uint16_t - 65535, uint32_t - 2^16-1
 
-#define PWM_LEVEL_MIN 0
-#define PWM_LEVEL_MAX 5
+#define PWM_LEVEL_MIN   0
+#define PWM_LEVEL_MAX 200
+                   // ^^^ the range of 5 to 19+ of 200 levels at 50Hz works for most servomotors  
 
 //------------------------------------------------------------------------------------
 // Global variable(s) used as bridge to pass parameters to the interrupts
@@ -123,14 +125,18 @@ int main(void)
         uint8_t but_chg = ( but_cur^but_prev ) & but_cur;
         but_prev = but_cur; // important! update what is now current will be past next time
 
-        // cycle through five PWM levels with one button
         if ( (but_chg & B_K4) !=0 ) { // if ( (but_chg & 0b00000001) !=0 )
-            if ( level0 < PWM_LEVEL_MAX ) {
-                level0++;
-            } else {
-                level0 = PWM_LEVEL_MIN;
-            }
-            set_pwm0 = level0;
+	        if ( level0 < PWM_LEVEL_MAX ) {
+		        level0++;
+		        set_pwm0 = level0;
+	        } // else nothing;
+        } // else nothing. Technically several buttons may be depressed during the same time interval
+
+        if ( (but_chg & B_K5) !=0 ) { // if ( (but_chg & 0b00000010) !=0 )
+	        if ( level0 > PWM_LEVEL_MIN ) {
+		        level0--;
+		        set_pwm0 = level0;
+	        } // else nothing;
         } // else nothing. Technically several buttons may be depressed during the same time interval
 
         if ( (but_chg & B_K6) !=0 ) { // if ( (but_chg & 0b00000100) !=0 )
