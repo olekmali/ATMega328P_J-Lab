@@ -39,7 +39,7 @@ void setup_PC012() {
     PORTC = PORTC | 0b00000111; // don't touch the upper 5 pin setup, just make sure that the lowest 3 pins has pull up resistors/one
 
     // enable the interrupt on the lowest 3 pins of PORTC
-    PCINT_PINC_initialize( 0b00000111, MyInterruptPinChangedFunction );   // enable pin change interrupt on PINC.0
+    PCINT_PINC_initialize( 0b00000111, &MyInterruptPinChangedFunction );   // enable pin change interrupt on PINC.0
 }
 
 void setup_Unused_Pins() {

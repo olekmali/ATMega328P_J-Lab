@@ -7,7 +7,7 @@
 #include <util/delay.h>
 
 // this test allows you to do the final tweak of the delay function
-int main()
+int main(void)
 {
     leds_init();
     keys_init();

@@ -3,7 +3,7 @@
 #include "bios_leds.h"
 #include "bios_kpads.h"
 
-int main()
+int main(void)
 {
 	leds_init();
 

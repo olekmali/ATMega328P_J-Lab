@@ -67,7 +67,7 @@ int main(void)
 {
     wdt_enable(7); //// 7 - 1.8s
     leds_init();
-    Timer1_initialize( INT_FREQUENCY , MyTimerFN, timer_prescale_1024 );
+    Timer1_initialize( INT_FREQUENCY , &MyTimerFN, timer_prescale_1024 );
     // Note: 1024 prescaler allows for the interrupt to go as low as 0.25Hz @ 16MHz clock
 
     uint8_t loop_count = 0;
